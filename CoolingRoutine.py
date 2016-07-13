@@ -26,11 +26,18 @@ def continuous_sugar_cooling(t, init_temp, cube_dectemp, roomtemp, k):
     temps = odeint(partial(newcoolingfcn, k=k, roomtemp=roomtemp), init_temp, t)
     return temps
 
-def sugar_specifiedtime_cooling(t, sugar_times, init_temp, cube_dectemp, roomtemp, k):
-    t0 = t[0]
-    tend = t[-1]
-    sorted_sugar_times = np.sort(sugar_times)
-    num_segments = len(sorted_sugar_times) + 1
+def sugar_specifiedtime_cooling(t, sugar_time_indices, init_temp, cube_dectemp, roomtemp, k):
+    sorted_sugar_time_indices = np.sort(sugar_time_indices)
+    num_portions = len(sorted_sugar_time_indices)
 
-    t_segments = np.split(t, sorted_sugar_times)
-    # not finished
+    temps = np.array([])
+    temp = init_temp
+    t_segments = np.split(t, sorted_sugar_time_indices)
+    num_segments = len(t_segments)
+    for i in range(num_segments):
+        temp_segment = cube_after_cooling(t_segments[i], temp, float(cube_dectemp)/num_portions, roomtemp, k)
+        temps = np.append(temps, temp_segment)
+        temp = temp_segment[-1]
+    temps[-1] += float(cube_dectemp)/num_portions
+
+    return temps
