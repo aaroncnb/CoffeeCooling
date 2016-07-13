@@ -29,7 +29,7 @@ def continuous_sugar_cooling(t, init_temp, cube_dectemp, roomtemp, k):
 def sugar_specifiedtime_cooling(t, sugar_times, init_temp, cube_dectemp, roomtemp, k):
     t0 = t[0]
     tend = t[-1]
-    sorted_sugar_times = np.sort(filter(lambda t: t>=t0 and t<=tend, sugar_times))
+    sorted_sugar_times = np.sort(sugar_times)
     num_segments = len(sorted_sugar_times) + 1
 
     t_segments = np.split(t, sorted_sugar_times)
