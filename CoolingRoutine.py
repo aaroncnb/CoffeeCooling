@@ -4,10 +4,10 @@ from functools import partial
 
 coolingfcn = lambda temp, t0, k, roomtemp: -k*(temp-roomtemp)
 
-cooling_parameters = {'init_temp': 94.0,
-                      'cube_dectemp': 5.0,
-                      'roomtemp': 25.0,
-                      'k': 1.0/15.0
+cooling_parameters = {'init_temp': 94.0,      # initial temperature of the coffee (degrees Celcius)
+                      'cube_dectemp': 5.0,    # temperature decrease due to the cube
+                      'roomtemp': 25.0,       # room temperature
+                      'k': 1.0/15.0           # cooling parameter (inverse degrees Celcius)
                       }
 
 # adding sugar cube before cooling
